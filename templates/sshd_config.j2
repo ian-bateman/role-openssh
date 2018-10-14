@@ -3,7 +3,7 @@
 # This is the sshd server system-wide configuration file.  See
 # sshd_config(5) for more information.
 
-# This sshd was compiled with PATH=/usr/bin:/bin:/usr/sbin:/sbin
+# This sshd was compiled with PATH=/bin:/usr/bin:/sbin:/usr/sbin
 
 # The strategy used for options in the default sshd_config shipped with
 # OpenSSH is to specify options with their default value where
@@ -15,26 +15,14 @@ Port {{ opensshd_port }}
 #ListenAddress 0.0.0.0
 #ListenAddress ::
 
-# The default requires explicit activation of protocol 1
-#Protocol 2
-
-# HostKey for protocol version 1
-#HostKey /etc/ssh/ssh_host_key
-# HostKeys for protocol version 2
 #HostKey /etc/ssh/ssh_host_rsa_key
-#HostKey /etc/ssh/ssh_host_dsa_key
 #HostKey /etc/ssh/ssh_host_ecdsa_key
 #HostKey /etc/ssh/ssh_host_ed25519_key
-
-# Lifetime and size of ephemeral version 1 server key
-#KeyRegenerationInterval 1h
-#ServerKeyBits 1024
 
 # Ciphers and keying
 #RekeyLimit default none
 
 # Logging
-# obsoletes QuietMode and FascistLogging
 #SyslogFacility AUTH
 #LogLevel INFO
 
@@ -46,7 +34,6 @@ PermitRootLogin {{ 'yes' if opensshd_permit_root_login | bool else 'no' }}
 #MaxAuthTries 6
 #MaxSessions 10
 
-#RSAAuthentication yes
 #PubkeyAuthentication yes
 
 # The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2
@@ -62,11 +49,9 @@ PermitRootLogin {{ 'yes' if opensshd_permit_root_login | bool else 'no' }}
 AuthorizedKeysCommandUser {{ opensshd_authz_keys_cmd_user }}
 
 # For this to work you will also need host keys in /etc/ssh/ssh_known_hosts
-#RhostsRSAAuthentication no
-# similar for protocol version 2
 #HostbasedAuthentication no
 # Change to yes if you don't trust ~/.ssh/known_hosts for
-# RhostsRSAAuthentication and HostbasedAuthentication
+# HostbasedAuthentication
 #IgnoreUserKnownHosts no
 # Don't read the user's ~/.rhosts and ~/.shosts files
 #IgnoreRhosts yes
@@ -109,8 +94,6 @@ UsePAM yes
 PrintMotd no
 PrintLastLog no
 #TCPKeepAlive yes
-#UseLogin no
-UsePrivilegeSeparation sandbox		# Default for new installations.
 #PermitUserEnvironment no
 #Compression delayed
 #ClientAliveInterval 0
@@ -126,21 +109,7 @@ UsePrivilegeSeparation sandbox		# Default for new installations.
 #Banner none
 
 # override default of no subsystems
-Subsystem	sftp	/usr/lib64/misc/sftp-server
-
-# the following are HPN related configuration options
-# tcp receive buffer polling. disable in non autotuning kernels
-#TcpRcvBufPoll yes
-
-# disable hpn performance boosts
-#HPNDisabled no
-
-# buffer size for hpn to non-hpn connections
-#HPNBufferSize 2048
-
-
-# allow the use of the none cipher
-#NoneEnabled no
+Subsystem	sftp	/usr/lib/misc/sftp-server
 
 # Example of overriding settings on a per-user basis
 #Match User anoncvs
@@ -149,6 +118,8 @@ Subsystem	sftp	/usr/lib64/misc/sftp-server
 #	PermitTTY no
 #	ForceCommand cvs server
 
-# Allow client to pass locale environment variables #367017
-# Doesn't work well with OS X clients!
-#AcceptEnv LANG LC_*
+# Allow client to pass locale environment variables. #367017
+AcceptEnv LANG LC_ALL LC_COLLATE LC_CTYPE LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LANGUAGE LC_ADDRESS LC_IDENTIFICATION LC_MEASUREMENT LC_NAME LC_PAPER LC_TELEPHONE
+
+# Allow client to pass COLORTERM to match TERM. #658540
+AcceptEnv COLORTERM
