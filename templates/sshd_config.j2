@@ -82,7 +82,7 @@ PermitEmptyPasswords no
 # If you just want the PAM account and session checks to run without
 # PAM authentication, then enable this but set PasswordAuthentication
 # and ChallengeResponseAuthentication to 'no'.
-UsePAM yes
+UsePAM {{ opensshd_use_pam }}
 
 #AllowAgentForwarding yes
 #AllowTcpForwarding yes
