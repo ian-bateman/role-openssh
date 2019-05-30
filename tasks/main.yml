@@ -21,7 +21,7 @@
   with_file:
     - public_keys/anthony.basile
     - public_keys/grant.barker
-    - public_keys/stephen.arnold
+    - public_keys/nerdboy
 
 - name: enable and start sshd
   service: name=sshd enabled=true state=started
