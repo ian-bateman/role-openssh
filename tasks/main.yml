@@ -10,18 +10,21 @@
     owner=root group=root mode=0600
     validate="/usr/sbin/sshd -t -f %s"
   notify: restart sshd
-  tags: configuration
+  tags: config
 
 - name: Set up multiple authorized keys
   authorized_key:
     user: gentoo
     state: present
     key: '{{ item }}'
-    path: /etc/ssh/authorized_keys
+    path: /etc/ssh/authorized_keys/gentoo
+    manage_dir: True
   with_file:
-    - public_keys/anthony.basile
-    - public_keys/grant.barker
+    - public_keys/blueness
     - public_keys/nerdboy
+    - public_keys/gbarker
+    - public_keys/kul
+  tags: [config, security]
 
 - name: enable and start sshd
   service: name=sshd enabled=true state=started
