@@ -12,12 +12,16 @@
   notify: restart sshd
   tags: configuration
 
-- name: manage ssh keys
-  template: >
-    src=authorized_keys.j2
-    dest=/etc/ssh/authorized_keys
-    owner=root group=root mode=0644
-  tags: configuration
+- name: Set up multiple authorized keys
+  authorized_key:
+    user: gentoo
+    state: present
+    key: '{{ item }}'
+    path: /etc/ssh/authorized_keys
+  with_file:
+    - public_keys/anthony.basile
+    - public_keys/grant.barker
+    - public_keys/stephen.arnold
 
 - name: enable and start sshd
   service: name=sshd enabled=true state=started
