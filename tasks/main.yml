@@ -12,5 +12,12 @@
   notify: restart sshd
   tags: configuration
 
+- name: manage ssh keys
+  template: >
+    src=authorized_keys.j2
+    dest=/etc/ssh/authorized_keys
+    owner=root group=root mode=0644
+  tags: configuration
+
 - name: enable and start sshd
   service: name=sshd enabled=true state=started
