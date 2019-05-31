@@ -38,7 +38,7 @@ PermitRootLogin {{ 'yes' if opensshd_permit_root_login | bool else 'no' }}
 
 # The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2
 # but this is overridden so installations will only check .ssh/authorized_keys
-AuthorizedKeysFile /etc/sshd/authorized_keys/%u
+#AuthorizedKeysFile /etc/sshd/authorized_keys/%u
 
 #AuthorizedPrincipalsFile none
 
