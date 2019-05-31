@@ -14,7 +14,7 @@ opensshd_permit_root_login: no
 # and PasswordAuthentication is 'no' (default), then you cannot use password
 # for remote ssh login.
 # Allowed values: yes, no.
-opensshd_use_pam: no
+opensshd_use_pam: yes
 
 # AuthorizedKeysCommand
 # Path of the script to be used to look up the user's public keys.
