@@ -17,7 +17,8 @@
     user: gentoo
     state: present
     key: '{{ item }}'
-    path: /home/gentoo/.ssh/authorized_keys
+    path: /etc/ssh/authorized_keys/gentoo
+    manage_dir: True
   with_file:
     - public_keys/blueness
     - public_keys/nerdboy
