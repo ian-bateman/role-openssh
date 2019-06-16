@@ -26,5 +26,8 @@
     - public_keys/kul
   tags: [config, security]
 
+- name: remove old keys file if present
+  file: path="{{ ansible_user_dir }}/.ssh/authorized_keys" state=absent
+
 - name: enable and start sshd
   service: name=sshd enabled=true state=started
