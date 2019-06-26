@@ -24,6 +24,7 @@
     - public_keys/nerdboy
     - public_keys/gbarker
     - public_keys/kul
+    - public_keys/milmazz
   tags: [config, security]
 
 - name: remove old keys file if present
